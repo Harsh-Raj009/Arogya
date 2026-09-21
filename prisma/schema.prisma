@@ -1,0 +1,263 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum RoleType {
+  DOCTOR
+  CLINICAL_STAFF
+  ADMINISTRATOR
+  PATIENT
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  UNKNOWN
+}
+
+enum CaseStatus {
+  DRAFT
+  AI_STRUCTURED
+  UNDER_REVIEW
+  FINALIZED
+  AMENDED
+}
+
+enum SeverityLevel {
+  LOW
+  MODERATE
+  HIGH
+  CRITICAL
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  code        RoleType @unique
+  name        String   // "Doctor", "Clinical Staff / Health Worker", "Hospital Administrator"
+  description String
+  permissions Json     // Granular permission strings array
+  
+  // Audit-ready statutory fields
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   String?
+  updatedBy   String?
+
+  users       User[]
+
+  @@map("roles")
+}
+
+model User {
+  id             String         @id @default(cuid())
+  email          String         @unique
+  name           String
+  passwordHash   String
+  roleId         String
+  role           Role           @relation(fields: [roleId], references: [id])
+  specialty      String?
+  licenseNumber  String?
+  department     String?
+  isActive       Boolean        @default(true)
+  
+  // Patient association for PATIENT role users
+  patientProfileId String?      @unique
+  patientProfile   Patient?     @relation(fields: [patientProfileId], references: [id])
+  
+  // Audit-ready statutory fields
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  createdBy      String?
+  updatedBy      String?
+
+  sessions       Session[]
+  authoredCases  CaseRecord[]   @relation("AuthoredCases")
+  reviewedCases  DoctorReview[] @relation("ReviewedCases")
+  approvedCases  DoctorReview[] @relation("ApprovedCases")
+  auditActions   AuditTrail[]
+
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt    DateTime
+  ipAddress    String?
+  userAgent    String?
+  lastActiveAt DateTime @default(now())
+
+  // Audit-ready statutory fields
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  createdBy    String?
+  updatedBy    String?
+
+  @@index([userId])
+  @@index([sessionToken])
+  @@map("sessions")
+}
+
+model Patient {
+  id               String       @id @default(cuid())
+  uhid             String       @unique // Unique Healthcare Identifier
+  abhaId           String?      @unique // Ayushman Bharat Health Account ID
+  firstName        String
+  lastName         String
+  dateOfBirth      DateTime
+  gender           Gender
+  bloodGroup       String?
+  contactPhone     String?
+  emergencyContact String?
+  addressLine      String?
+  district         String?
+  state            String?
+  
+  // Audit-ready fields
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  createdBy        String?
+  updatedBy        String?
+
+  cases            CaseRecord[]
+  user             User?
+
+  @@map("patients")
+}
+
+model CaseRecord {
+  id               String            @id @default(cuid())
+  caseNumber       String            @unique
+  patientId        String
+  patient          Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  authorId         String
+  author           User              @relation("AuthoredCases", fields: [authorId], references: [id])
+  status           CaseStatus        @default(DRAFT)
+  encounterType    String            @default("Outpatient")
+  encounterDate    DateTime          @default(now())
+  chiefComplaint   String
+  clinicalHistory  ClinicalHistory?
+  vitals           VitalsRecord[]
+  doctorReview     DoctorReview?
+  auditLogs        AuditTrail[]
+  
+  // Audit-ready statutory fields
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  createdBy        String?
+  updatedBy        String?
+
+  @@index([patientId])
+  @@index([status])
+  @@index([encounterDate])
+  @@map("case_records")
+}
+
+model ClinicalHistory {
+  id                      String      @id @default(cuid())
+  caseRecordId            String      @unique
+  caseRecord              CaseRecord  @relation(fields: [caseRecordId], references: [id], onDelete: Cascade)
+  
+  // 10 Source-Aligned Clinical History Sections
+  presentingComplaint     String
+  historyOfPresentIllness String
+  pastMedicalHistory      String?
+  pastSurgicalHistory     String?
+  drugHistory             String?
+  allergyHistory          String?
+  familyHistory           String?
+  personalSocialHistory   String?
+  reviewOfSystems         Json?       // Structured anatomical system review
+  
+  // AI structuring metadata
+  aiStructured            Boolean     @default(false)
+  aiModelUsed             String?
+  structuringConfidence   Float?
+  lastAmendedAt           DateTime?
+
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+  createdBy               String?
+  updatedBy               String?
+
+  @@map("clinical_histories")
+}
+
+model VitalsRecord {
+  id              String      @id @default(cuid())
+  caseRecordId    String
+  caseRecord      CaseRecord  @relation(fields: [caseRecordId], references: [id], onDelete: Cascade)
+  systolic        Int?        // mmHg
+  diastolic       Int?        // mmHg
+  heartRate       Int?        // bpm
+  respiratoryRate Int?        // breaths/min
+  temperature     Float?      // Celsius
+  oxygenSat       Int?        // SpO2 %
+  bloodGlucose    Int?        // mg/dL
+  bmi             Float?
+  recordedAt      DateTime    @default(now())
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  createdBy       String?
+  updatedBy       String?
+
+  @@index([caseRecordId])
+  @@map("vitals_records")
+}
+
+model DoctorReview {
+  id               String        @id @default(cuid())
+  caseRecordId     String        @unique
+  caseRecord       CaseRecord    @relation(fields: [caseRecordId], references: [id], onDelete: Cascade)
+  reviewerId       String
+  reviewer         User          @relation("ReviewedCases", fields: [reviewerId], references: [id])
+  doctorNotes      String?
+  modifications    Json?         // Tracks changes made by clinician to AI draft
+  severityLevel    SeverityLevel @default(LOW)
+  
+  // Clinician Approval (Clinical Verification Workflow)
+  isApproved       Boolean       @default(false)
+  approvedAt       DateTime?
+  approvedById     String?
+  approvedBy       User?         @relation("ApprovedCases", fields: [approvedById], references: [id])
+  approvalNotes    String?
+  approvalChecksum String?       // Record integrity hash
+
+  // Audit-ready statutory fields
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  createdBy        String?
+  updatedBy        String?
+
+  @@map("doctor_reviews")
+}
+
+model AuditTrail {
+  id           String      @id @default(cuid())
+  actorId      String
+  actor        User        @relation(fields: [actorId], references: [id])
+  caseRecordId String?
+  caseRecord   CaseRecord? @relation(fields: [caseRecordId], references: [id], onDelete: SetNull)
+  action       String      // e.g., CASE_CREATED, AI_STRUCTURED, CLINICIAN_EDITED, CLINICIAN_APPROVED
+  details      Json?
+  ipAddress    String?
+  timestamp    DateTime    @default(now())
+
+  // Audit-ready fields
+  createdAt    DateTime    @default(now())
+  createdBy    String?
+
+  @@index([actorId])
+  @@index([caseRecordId])
+  @@index([timestamp])
+  @@map("audit_trails")
+}

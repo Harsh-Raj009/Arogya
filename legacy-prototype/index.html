@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arogya — Patient Case Taking</title>
+  <meta name="description" content="Arogya is an AI-assisted patient case-taking and clinical documentation prototype for SIH26047." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <div>
+          <div class="brand-name">AROGYA</div>
+          <div class="brand-tag">Better history. Better care.</div>
+        </div>
+      </div>
+
+      <div class="side-section-label">WORKSPACE</div>
+      <button class="nav-item active" data-screen="dashboard">
+        <span class="nav-icon">⌂</span><span>Dashboard</span>
+      </button>
+      <button class="nav-item" data-screen="new-case">
+        <span class="nav-icon">＋</span><span>New Patient Case</span>
+      </button>
+      <button class="nav-item" data-screen="cases">
+        <span class="nav-icon">▣</span><span>Patient Cases</span>
+      </button>
+      <button class="nav-item" data-screen="history">
+        <span class="nav-icon">◷</span><span>Recent Activity</span>
+      </button>
+
+      <div class="sidebar-bottom">
+        <div class="demo-note">
+          <span class="status-dot"></span>
+          <div>
+            <strong>Demo Mode</strong>
+            <small>SIH26047 prototype</small>
+          </div>
+        </div>
+        <button class="profile">
+          <div class="avatar">DR</div>
+          <div>
+            <strong>Dr. Riya Sharma</strong>
+            <small>Clinician</small>
+          </div>
+          <span class="chevron">⌄</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="breadcrumb">Arogya <span>/</span> <strong id="pageTitle">Dashboard</strong></div>
+        <div class="top-actions">
+          <button class="icon-btn" title="Notifications">◌</button>
+          <button class="new-case-btn" data-screen="new-case">+ New Case</button>
+        </div>
+      </header>
+
+      <section id="screen-dashboard" class="screen active">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">CLINICAL WORKSPACE</p>
+            <h1>Good morning, Dr. Sharma</h1>
+            <p class="muted">Capture the right information once, structure it automatically, and review it with confidence.</p>
+          </div>
+          <div class="date-pill">14 Sep 2026 · Monday</div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Today's Cases</div>
+            <div class="stat-value">18</div>
+            <div class="stat-meta positive">↑ 12% vs. yesterday</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Pending Review</div>
+            <div class="stat-value">04</div>
+            <div class="stat-meta warning">Needs clinician review</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg. Intake Time</div>
+            <div class="stat-value">06:42</div>
+            <div class="stat-meta positive">↓ 18% this week</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">AI Drafts Reviewed</div>
+            <div class="stat-value">94%</div>
+            <div class="stat-meta">Last 30 days</div>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div class="panel large-panel">
+            <div class="panel-head">
+              <div>
+                <h2>Recent Patient Cases</h2>
+                <p>Latest case-taking records ready for review.</p>
+              </div>
+              <button class="text-btn" data-screen="cases">View all →</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Patient</th>
+                    <th>Chief Complaint</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Updated</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="patient-cell"><span class="mini-avatar teal">AS</span><div><strong>Aarav Singh</strong><small>AR-24018 · 32 yrs</small></div></div></td>
+                    <td>Fever & headache</td>
+                    <td>3 days</td>
+                    <td><span class="badge success">Reviewed</span></td>
+                    <td>10 min ago</td>
+                  </tr>
+                  <tr>
+                    <td><div class="patient-cell"><span class="mini-avatar blue">PN</span><div><strong>Priya Nair</strong><small>AR-24019 · 27 yrs</small></div></div></td>
+                    <td>Abdominal pain</td>
+                    <td>2 days</td>
+                    <td><span class="badge warning">Pending</span></td>
+                    <td>21 min ago</td>
+                  </tr>
+                  <tr>
+                    <td><div class="patient-cell"><span class="mini-avatar purple">RK</span><div><strong>Rohan Kumar</strong><small>AR-24020 · 45 yrs</small></div></div></td>
+                    <td>Joint stiffness</td>
+                    <td>6 months</td>
+                    <td><span class="badge success">Reviewed</span></td>
+                    <td>38 min ago</td>
+                  </tr>
+                  <tr>
+                    <td><div class="patient-cell"><span class="mini-avatar orange">MV</span><div><strong>Meera Verma</strong><small>AR-24021 · 61 yrs</small></div></div></td>
+                    <td>Breathlessness</td>
+                    <td>1 week</td>
+                    <td><span class="badge warning">Pending</span></td>
+                    <td>52 min ago</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>Case Journey</h2>
+                <p>How Arogya reduces documentation friction.</p>
+              </div>
+            </div>
+            <div class="journey">
+              <div class="journey-step done"><span>1</span><div><strong>Patient Intake</strong><small>Basic details & complaint</small></div></div>
+              <div class="journey-line"></div>
+              <div class="journey-step done"><span>2</span><div><strong>Guided History</strong><small>Symptoms, past, drugs & allergy</small></div></div>
+              <div class="journey-line"></div>
+              <div class="journey-step active"><span>3</span><div><strong>AI Structuring</strong><small>Extract & organize captured data</small></div></div>
+              <div class="journey-line"></div>
+              <div class="journey-step"><span>4</span><div><strong>Doctor Review</strong><small>Edit, validate & save</small></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-new-case" class="screen">
+        <div class="page-heading compact">
+          <div>
+            <p class="eyebrow">NEW PATIENT CASE</p>
+            <h1>Patient Case-Taking</h1>
+            <p class="muted">Enter the history once. Arogya will structure the information into a clinician-ready draft.</p>
+          </div>
+          <div class="ai-status"><span class="pulse"></span> AI assistant ready</div>
+        </div>
+
+        <div class="case-layout">
+          <div class="panel case-form-panel">
+            <div class="stepper">
+              <div class="step active"><span>1</span><div><strong>Patient</strong><small>Demographics</small></div></div>
+              <div class="step" id="step2"><span>2</span><div><strong>Complaint</strong><small>Presenting issue</small></div></div>
+              <div class="step" id="step3"><span>3</span><div><strong>History</strong><small>Medical background</small></div></div>
+              <div class="step" id="step4"><span>4</span><div><strong>Review</strong><small>AI-assisted draft</small></div></div>
+            </div>
+
+            <form id="caseForm">
+              <div class="form-section">
+                <div class="section-title">
+                  <div>
+                    <span class="section-number">01</span>
+                    <h2>Patient Details</h2>
+                  </div>
+                  <span class="required-note">* Required</span>
+                </div>
+                <div class="form-grid">
+                  <label>Full Name *<input id="fullName" required placeholder="e.g. Aarav Singh" /></label>
+                  <label>Age *<input id="age" type="number" min="0" max="120" required placeholder="e.g. 32" /></label>
+                  <label>Gender
+                    <select id="gender"><option value="">Select</option><option>Female</option><option>Male</option><option>Other</option></select>
+                  </label>
+                  <label>Phone<input id="phone" placeholder="e.g. 98XXXXXXXX" /></label>
+                  <label>Patient ID<input id="patientId" value="AR-24022" /></label>
+                  <label>Visit Date<input id="visitDate" type="date" /></label>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="section-title">
+                  <div>
+                    <span class="section-number">02</span>
+                    <h2>Presenting Complaint</h2>
+                  </div>
+                </div>
+                <label>Chief Complaint *<input id="complaint" required placeholder="e.g. Fever, headache and body ache" /></label>
+                <div class="form-grid three">
+                  <label>Duration<input id="duration" placeholder="e.g. 3 days" /></label>
+                  <label>Severity
+                    <select id="severity"><option value="">Select</option><option>Mild</option><option>Moderate</option><option>Severe</option></select>
+                  </label>
+                  <label>Onset
+                    <select id="onset"><option value="">Select</option><option>Sudden</option><option>Gradual</option><option>Intermittent</option></select>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="section-title">
+                  <div>
+                    <span class="section-number">03</span>
+                    <h2>History & Clinical Context</h2>
+                  </div>
+                </div>
+                <div class="voice-row">
+                  <label class="grow">Patient's Narrative / History
+                    <textarea id="narrative" rows="6" placeholder="Type what the patient says, or use the voice button to dictate the history..."></textarea>
+                  </label>
+                  <button type="button" class="voice-btn" id="voiceBtn"><span>🎙</span><strong>Voice Input</strong><small>Demo: inserts sample history</small></button>
+                </div>
+                <div class="form-grid">
+                  <label>Past Medical History<textarea id="pastHistory" rows="3" placeholder="e.g. Hypertension since 2022"></textarea></label>
+                  <label>Past Surgical History<textarea id="surgicalHistory" rows="3" placeholder="e.g. Appendectomy in 2019"></textarea></label>
+                  <label>Current Medication<textarea id="medication" rows="3" placeholder="e.g. Amlodipine 5 mg once daily"></textarea></label>
+                  <label>Allergies<textarea id="allergy" rows="3" placeholder="e.g. No known drug allergy"></textarea></label>
+                  <label>Family History<textarea id="familyHistory" rows="3" placeholder="e.g. Father with type 2 diabetes"></textarea></label>
+                  <label>Personal / Social History<textarea id="personalHistory" rows="3" placeholder="e.g. Non-smoker, occasional tea"></textarea></label>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="section-title">
+                  <div>
+                    <span class="section-number">04</span>
+                    <h2>Vitals</h2>
+                  </div>
+                </div>
+                <div class="form-grid four">
+                  <label>Temperature <input id="temperature" placeholder="°C" /></label>
+                  <label>BP <input id="bp" placeholder="mmHg" /></label>
+                  <label>Pulse <input id="pulseValue" placeholder="bpm" /></label>
+                  <label>SpO₂ <input id="spo2" placeholder="%" /></label>
+                </div>
+              </div>
+
+              <div class="form-footer">
+                <button type="button" class="secondary-btn" data-screen="dashboard">Cancel</button>
+                <button type="submit" class="primary-btn">Generate AI Case Draft →</button>
+              </div>
+            </form>
+          </div>
+
+          <aside class="panel assistant-panel">
+            <div class="assistant-header">
+              <div class="ai-badge">✦</div>
+              <div><strong>Arogya AI Assistant</strong><small>Structuring, not diagnosing</small></div>
+            </div>
+            <div class="assistant-box">
+              <div class="assistant-message">
+                <span class="tiny-ai">✦</span>
+                <p>I'll organize the information you enter into a concise, reviewable case summary. The clinician remains in control of the final record.</p>
+              </div>
+            </div>
+            <div class="quality-card">
+              <div class="quality-head"><strong>Capture quality</strong><span id="qualityPct">0%</span></div>
+              <div class="progress"><span id="qualityBar"></span></div>
+              <small>Complete more relevant fields for a better draft.</small>
+            </div>
+            <div class="privacy-note">
+              <strong>🔒 Privacy by design</strong>
+              <p>Prototype uses demo data only. Production deployment should use role-based access, encryption and audited clinical workflows.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="screen-review" class="screen">
+        <div class="page-heading compact">
+          <div>
+            <p class="eyebrow">AI-ASSISTED REVIEW</p>
+            <h1>Clinical Case Draft</h1>
+            <p class="muted">Review and edit the draft before saving the patient's case.</p>
+          </div>
+          <div class="review-status">Draft • Human review required</div>
+        </div>
+        <div class="review-grid">
+          <div class="panel">
+            <div class="panel-head">
+              <div><h2 id="reviewPatientName">Patient</h2><p id="reviewMeta">—</p></div>
+              <span class="badge info">AI STRUCTURED</span>
+            </div>
+            <div id="reviewContent" class="review-content"></div>
+            <div class="form-footer">
+              <button class="secondary-btn" id="backToEdit">← Back to edit</button>
+              <button class="primary-btn" id="saveCaseBtn">Approve & Save Case ✓</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><div><h2>AI Notes</h2><p>What the assistant did</p></div></div>
+            <div class="ai-notes">
+              <div><span>✓</span><p>Extracted symptom, duration and severity from structured fields.</p></div>
+              <div><span>✓</span><p>Grouped past history, medication and allergy information.</p></div>
+              <div><span>✓</span><p>Generated a concise clinician-facing summary without making a diagnosis.</p></div>
+              <div><span>!</span><p>Clinician must verify all AI-generated content before saving.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-cases" class="screen">
+        <div class="page-heading compact">
+          <div><p class="eyebrow">PATIENT RECORDS</p><h1>Patient Cases</h1><p class="muted">Searchable digital case records created through Arogya.</p></div>
+          <div class="search-box">⌕ <input id="caseSearch" placeholder="Search patient or complaint..." /></div>
+        </div>
+        <div class="panel">
+          <div class="table-wrap">
+            <table id="casesTable">
+              <thead><tr><th>Patient</th><th>ID</th><th>Complaint</th><th>Age</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Aarav Singh</strong></td><td>AR-24018</td><td>Fever & headache</td><td>32</td><td><span class="badge success">Reviewed</span></td><td><button class="small-btn">Open</button></td></tr>
+                <tr><td><strong>Priya Nair</strong></td><td>AR-24019</td><td>Abdominal pain</td><td>27</td><td><span class="badge warning">Pending</span></td><td><button class="small-btn">Open</button></td></tr>
+                <tr><td><strong>Rohan Kumar</strong></td><td>AR-24020</td><td>Joint stiffness</td><td>45</td><td><span class="badge success">Reviewed</span></td><td><button class="small-btn">Open</button></td></tr>
+                <tr><td><strong>Meera Verma</strong></td><td>AR-24021</td><td>Breathlessness</td><td>61</td><td><span class="badge warning">Pending</span></td><td><button class="small-btn">Open</button></td></tr>
+                <tr><td><strong>Vikram Joshi</strong></td><td>AR-24017</td><td>Back pain</td><td>39</td><td><span class="badge success">Reviewed</span></td><td><button class="small-btn">Open</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-history" class="screen">
+        <div class="page-heading compact">
+          <div><p class="eyebrow">AUDIT TRAIL</p><h1>Recent Activity</h1><p class="muted">A simple timeline of recent actions in the clinical workspace.</p></div>
+        </div>
+        <div class="panel">
+          <div class="activity-list">
+            <div class="activity"><span class="activity-dot green"></span><div><strong>Case AR-24021 approved</strong><p>Dr. Riya Sharma reviewed and saved the AI-assisted draft.</p></div><time>12 min ago</time></div>
+            <div class="activity"><span class="activity-dot blue"></span><div><strong>New patient case created</strong><p>AR-24021 · Meera Verma · Breathlessness</p></div><time>52 min ago</time></div>
+            <div class="activity"><span class="activity-dot purple"></span><div><strong>Voice history captured</strong><p>Speech was converted to editable text for case AR-24020.</p></div><time>1 hr ago</time></div>
+            <div class="activity"><span class="activity-dot orange"></span><div><strong>Case draft edited</strong><p>Medication and allergy fields were updated for AR-24019.</p></div><time>2 hrs ago</time></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
