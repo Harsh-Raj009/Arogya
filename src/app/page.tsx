@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/ui/status-badge";
 
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
@@ -223,7 +224,7 @@ export default function HomePage() {
 
             {/* Right Column: Realistic Clinical Workflow Visual */}
             <div className="lg:col-span-6">
-              <div className="rounded-xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] space-y-4">
+              <div className="rounded-xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-sm space-y-4">
                 {/* Clinical Window Header */}
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div className="flex items-center gap-2">
@@ -234,9 +235,7 @@ export default function HomePage() {
                     <span className="text-slate-300">•</span>
                     <span className="text-[11px] text-slate-500">General OPD • Room 104</span>
                   </div>
-                  <Badge variant="teal" size="sm">
-                    AI Assisted Draft
-                  </Badge>
+                  <StatusBadge status="AI_STRUCTURED" size="sm" />
                 </div>
 
                 {/* Patient Demographic Bar */}
@@ -316,10 +315,7 @@ export default function HomePage() {
                     <User className="h-3.5 w-3.5 text-slate-400" />
                     <span>Attending: <strong>Dr. Priya Sharma, MD</strong></span>
                   </div>
-                  <span className="text-amber-900 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded text-[11px] font-medium flex items-center gap-1">
-                    <Clock className="h-3 w-3 text-amber-600" />
-                    Awaiting Clinician Sign-Off
-                  </span>
+                  <StatusBadge status="PENDING_REVIEW" size="sm" />
                 </div>
               </div>
             </div>
@@ -735,7 +731,7 @@ export default function HomePage() {
                 </div>
                 <span className="font-bold text-white text-base tracking-tight">AROGYA</span>
                 <span className="text-[10px] font-mono text-teal-300 bg-teal-950/80 border border-teal-800 px-1.5 py-0.5 rounded">
-                  v0.2.0
+                  v0.3.0
                 </span>
               </div>
               <p className="text-slate-400 text-xs max-w-md">

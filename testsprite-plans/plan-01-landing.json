@@ -1,0 +1,33 @@
+{
+  "projectId": "e55477c6-daed-461b-b0d4-3701651c7293",
+  "type": "frontend",
+  "name": "Public landing page displays branding and clinical workflow",
+  "description": "Verify the public landing page loads with the Arogya brand header, SIH26047 badge, clinical encounter preview card with vitals, and 5-step workflow pipeline.",
+  "priority": "p0",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to the homepage /"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the Arogya header logo, Clinical badge, and headline 'AI-Assisted Patient Case-Taking and Clinical Documentation' are displayed on the page"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the realistic clinical workflow visual displays CASE #AR-2026-0041, patient Rajesh Gupta, and the AI Assisted Draft status badge"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the objective physiological measurements show BP 148/92, Pulse 88, and SpO2 98%"
+    },
+    {
+      "type": "action",
+      "description": "Click the Sign In button in the navigation header"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the user navigates to the /login page with the workstation login card"
+    }
+  ]
+}

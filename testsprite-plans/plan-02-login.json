@@ -1,0 +1,41 @@
+{
+  "projectId": "e55477c6-daed-461b-b0d4-3701651c7293",
+  "type": "frontend",
+  "name": "Login rejection with invalid credentials and doctor sign in",
+  "description": "Verify invalid credentials show clear error message, and doctor quick demo login succeeds and enters the clinician dashboard.",
+  "priority": "p0",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /login"
+    },
+    {
+      "type": "action",
+      "description": "Type 'invalid@hospital.gov' into the Institutional Email field"
+    },
+    {
+      "type": "action",
+      "description": "Type 'WrongPass123!' into the Password field"
+    },
+    {
+      "type": "action",
+      "description": "Click the Sign In button"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify an error message indicating invalid credentials or authentication failure appears"
+    },
+    {
+      "type": "action",
+      "description": "Click the Doctor quick demo account card to pre-fill valid credentials"
+    },
+    {
+      "type": "action",
+      "description": "Click the Sign In button"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the user is redirected to /dashboard and the clinical shift dashboard appears with shift metrics"
+    }
+  ]
+}

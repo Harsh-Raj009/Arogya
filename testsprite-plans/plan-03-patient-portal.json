@@ -1,0 +1,41 @@
+{
+  "projectId": "e55477c6-daed-461b-b0d4-3701651c7293",
+  "type": "frontend",
+  "name": "Patient login, profile viewing, and record access isolation",
+  "description": "Verify patient logs in, views their own health records and demographic profile, and experiences proper isolation.",
+  "priority": "p0",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /login"
+    },
+    {
+      "type": "action",
+      "description": "Click the Patient quick demo account card to pre-fill patient credentials"
+    },
+    {
+      "type": "action",
+      "description": "Click the Sign In button"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the patient lands on /patient/dashboard showing the Patient Portal header and welcome greeting for Rajesh Gupta"
+    },
+    {
+      "type": "action",
+      "description": "Click on 'My Health Records' tab in the patient portal navigation"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the patient health records table displays Case #AR-2026-0041"
+    },
+    {
+      "type": "action",
+      "description": "Click on 'My Profile' tab in the patient portal navigation"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the patient profile displays Rajesh Gupta, UHID AIIMS-2026-0941, and ABHA 91-4821-3920-1102"
+    }
+  ]
+}
